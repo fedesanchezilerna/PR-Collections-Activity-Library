@@ -20,12 +20,14 @@ public class Book {
         this.year = year;
     }
 
+    // Constructor chaining
     public Book(String isbn, String title, short year) {
-        this.isbn = isbn;
-        this.title = title;
-        this.writers = new HashSet<>();
-        this.year = year;
-        //this(isbn, title, new HashSet<>(), year);
+//        this.code = String.format("%04d", idNext++);
+//        this.isbn = isbn;
+//        this.title = title;
+//        this.writers = new HashSet<>();
+//        this.year = year;
+        this(isbn, title, new HashSet<>(), year);
     }
 
     public String getCode() { return code; }
@@ -58,6 +60,16 @@ public class Book {
     @Override
     public String toString() {
         String authors = String.join(", ", writers.stream().map(Writer::getName).toArray(String[]::new));
-        return String.format("%-6s %-20s %-45s %-50s %-4d", code, isbn, title, authors, year);
+        
+        //StringBuilder authorBuilder = new StringBuilder();
+        //for (Writer writer : writers) {
+        //    if (authorBuilder.length() > 0) {
+        //        authorBuilder.append(", ");
+        //    }
+        //    authorBuilder.append(writer.getName());
+        //}
+        //String authors = authorBuilder.toString();
+        
+        return String.format("%-6S%-20S%-45S%-40S%-5d", code, isbn, title, authors, year);
     }
 }

@@ -8,7 +8,6 @@ public class LibraryMain {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-
         // data.txt
         Library library = new Library("Library");
 
@@ -42,19 +41,19 @@ public class LibraryMain {
         Book book8 = new Book("978-84-8181-008-5", "Harry Potter and the Sorcerer's Stone", (short) 1997);
         System.out.println(book8.addWriter(rowling));
 
-        Book book9 = new Book("978-84-8181-009-5", "Harry Potter and the Chamber of Secrets",	(short) 1998);
+        Book book9 = new Book("978-84-8181-009-5", "Harry Potter and the Chamber of Secrets", (short) 1998);
         System.out.println(book9.addWriter(rowling));
 
-        Book book10 = new Book("978-84-8181-010-5", "Harry Potter and the Prisoner of Azkaban",	(short) 1999);
+        Book book10 = new Book("978-84-8181-010-5", "Harry Potter and the Prisoner of Azkaban", (short) 1999);
         System.out.println(book10.addWriter(rowling));
 
         Book book11 = new Book("978-84-8181-011-5", "Harry Potter and the Goblet of Fire", (short) 2000);
         System.out.println(book11.addWriter(rowling));
 
-        Book book12 = new Book("978-84-8181-012-5", "Harry Potter and the Order of the Phoenix",(short) 2003);
+        Book book12 = new Book("978-84-8181-012-5", "Harry Potter and the Order of the Phoenix", (short) 2003);
         System.out.println(book12.addWriter(rowling));
 
-        Book book13 = new Book("978-84-8181-013-5", "Harry Potter and the Half-Blood Prince",(short) 2005);
+        Book book13 = new Book("978-84-8181-013-5", "Harry Potter and the Half-Blood Prince", (short) 2005);
         System.out.println(book13.addWriter(rowling));
 
         Book book14 = new Book("978-84-8181-014-5", "Harry Potter and the Deathly Hallows", (short) 2007);
@@ -65,12 +64,11 @@ public class LibraryMain {
         System.out.println(book15.addWriter(thorne));
         System.out.println(book15.addWriter(tiffany));
 
-        Book book16 = new Book("978-034-544-488-2", "The Talisman", (short)1984);
+        Book book16 = new Book("978-034-544-488-2", "The Talisman", (short) 1984);
         System.out.println(book16.addWriter(king));
         System.out.println(book16.addWriter(straub));
 
-
-        //library.addBook(book1);
+        // library.addBook(book1);
         System.out.println(library.addBook(book2));
         System.out.println(library.addBook(book3));
         System.out.println(library.addBook(book4));
@@ -105,9 +103,12 @@ public class LibraryMain {
 
             switch (option) {
                 case 1:
+                    // List all books.
                     System.out.println(library);
                     break;
                 case 2:
+                    // Add a book to the bookstore, ask how many writers it contains to know how
+                    // many writers you have to enter by keyboard.
                     System.out.print("ENTER ISBN: ");
                     String isbn = scanner.nextLine();
                     System.out.print("ENTER TITLE: ");
@@ -135,11 +136,68 @@ public class LibraryMain {
                     System.out.println("BOOK ADDED: " + library.addBook(book));
                     break;
                 case 3:
+                    // Delete a book.
                     System.out.print("ENTER CODE TO REMOVE: ");
                     String code = scanner.nextLine();
                     System.out.println("BOOK REMOVED: " + library.removeBook(code));
                     break;
-
+                case 4:
+                    // Search for a book by its code.
+                    System.out.print("ENTER CODE BOOK: ");
+                    String codeBook = scanner.nextLine();
+                    System.out.println("BOOK IS IN THE LIBRARY: " + library.isBookInLibrary(codeBook));
+                    break;
+                case 5:
+                    System.out.println("NUMBER OF BOOKS");
+                    System.out.println("NUMBER OF BOOKS IN LIBRARY: " + library.numberOfBooks());
+                    break;
+                case 6:
+                    // Search for a book by code or isbn . If found, display it to the console.
+                    System.out.println("1: SEARCH BY CODE, 2: SEARCH BY ISBN ? 1");
+                    int searchOption = scanner.nextInt();
+                    scanner.nextLine();
+                    if (searchOption == 1) {
+                        System.out.print("ENTER CODE BOOK: ");
+                        String codeBook2 = scanner.nextLine();
+                        System.out.println("BOOK FOUND: " + library.getBookFromLibrary(codeBook2, true));
+                    } else if (searchOption == 2) {
+                        System.out.print("ENTER ISBN BOOK: ");
+                        String isbnBook = scanner.nextLine();
+                        System.out.println("BOOK FOUND: " + library.getBookFromLibrary(isbnBook, false));
+                    } else {
+                        // System.out.println(1);
+                        System.out.println("INVALID OPTION");
+                    }
+                    break;
+                case 7:
+                    // Search all books by title (considers that the user can enter the incomplete
+                    // book title, in lowercase or uppercase).
+                    System.out.println("GET BOOKS BY TITLE");
+                    System.out.print("ENTER TITLE: ");
+                    String titleBook = scanner.nextLine();
+                    Set<Book> matchBooksByTitle = library.getBooksByTitle(titleBook);
+                    if (matchBooksByTitle.isEmpty()) {
+                        System.out.println("NO BOOKS FOUND");
+                    } else {
+                        for (Book matchBook : matchBooksByTitle) {
+                            System.out.println(matchBook);
+                        }
+                    }
+                    break;
+                case 8:
+                    // Search all books by title (considers that the user can enter the incomplete
+                    // book title, in lowercase or uppercase).
+                    System.out.print("ENTER THE NAME OF THE WRITER: ");
+                    String writerName = scanner.nextLine();
+                    Set<Book> matchBooksByWriter = library.getBooksByWriter(writerName);
+                    if (matchBooksByWriter.isEmpty()) {
+                        System.out.println("NO BOOKS FOUND");
+                    } else {
+                        for (Book matchBook : matchBooksByWriter) {
+                            System.out.println(matchBook);
+                        }
+                    }
+                    break;
                 case 0:
                     System.out.println("EXITING...");
                     break;
